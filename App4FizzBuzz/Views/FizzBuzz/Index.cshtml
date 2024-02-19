@@ -1,0 +1,48 @@
+﻿@model FizzBuzzViewModel
+
+@{
+    List<string> results = ViewBag.Results ?? new List<string>();
+}
+
+<header class="text-center mb-3">
+    <div class="bg-primary text-white hero-banner">
+        <h1>FizzBuzz!</h1>
+        <h3>The greatest FizzBuzz game ever made! 😉</h3>
+    </div>
+</header>
+
+<div class="container flex-grow-1 d-flex flex-column">
+    <section class="card flex-grow-1">
+        <header class="card-header"><b>Input a start and end point to begin!</b></header>
+        <div class="p-3">
+            <form asp-action="PlayFizzBuzz" asp-controller="FizzBuzz" method="post" class="needs-validation" novalidate="true">
+                <div class="row pb-5">
+                    <div class="col-md-6">
+                        <label asp-for="Start"></label>
+                        <div class="input-group">
+                            <input asp-for="Start" class="form-control @(Html.ViewData.ModelState.ContainsKey("Start") ? Html.ViewData.ModelState["Start"]?.Errors.Count == 0 ? "is-valid" : "is-invalid" : "")" required>
+                            <div class="invalid-tooltip">@Html.ValidationMessageFor(model => model.Start)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="End"></label>
+                        <div class="input-group">
+                            <input asp-for="End" class="form-control @(Html.ViewData.ModelState.ContainsKey("End") ? Html.ViewData.ModelState["End"]?.Errors.Count == 0 ? "is-valid" : "is-invalid" : "")" required>
+                            <div class="invalid-tooltip">@Html.ValidationMessageFor(model => model.End)</div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <h4 class="mb-0 pt-3">Results:</h4>
+        </div>
+        <footer class="card-footer flex-grow-1 scroll-box">
+            <ul>
+                @foreach (var result in results)
+                {
+                    <li>@result</li>
+                }
+            </ul>
+        </footer>
+    </section>
+</div>
